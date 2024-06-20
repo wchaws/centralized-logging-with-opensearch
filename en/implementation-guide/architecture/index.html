@@ -1737,8 +1737,10 @@
 <li>AWS service logs are stored in an Amazon S3 bucket (Log Bucket).</li>
 <li>An event notification is sent to Amazon SQS using S3 Event Notifications when a new log file is created.</li>
 <li>Amazon SQS initiates AWS Lambda.</li>
-<li>AWS Lambda copies objects from the log bucket to the staging bucket.</li>
-<li>The Log Processor, AWS Step Functions, processes raw log files stored in the staging bucket in batches. It converts them into Apache Parquet format and automatically partitions all incoming data based on criteria including time and region.</li>
+<li>AWS Lambda get objects from the Amazon S3 log bucket.</li>
+<li>AWS Lambda put objects to the staging bucket.</li>
+<li>The Log Processor, AWS Step Functions, processes raw log files stored in the staging bucket in batches. </li>
+<li>The Log Processor, AWS Step Functions, converts log data into Apache Parquet format and automatically partitions all incoming data based on criteria including time and region.</li>
 </ol>
 <h3 id="logs-through-amazon-kinesis-data-streams">Logs through Amazon Kinesis Data Streams</h3>
 <p>This section is applicable to CloudFront real-time logs, CloudTrail logs (CloudWatch), and VPC Flow logs (CloudWatch).</p>
@@ -1792,9 +1794,7 @@ Otherwise, they will be in another AWS account.</p>
 </ul>
 <p>The log pipeline runs the following workflow:</p>
 <ol>
-<li>
-<p><a href="https://fluentbit.io/">Fluent Bit</a> works as the underlying log agent to collect logs from application servers and send them to an optional <a href="../applications/#log-buffer">Log Buffer</a>, or ingest into OpenSearch domain directly.</p>
-</li>
+<li><a href="https://fluentbit.io/">Fluent Bit</a> works as the underlying log agent to collect logs from application servers and send them to an optional <a href="../applications/#log-buffer">Log Buffer</a>, or ingest into OpenSearch domain directly.</li>
 <li>
 <p>The Log Buffer triggers the Lambda (Log Processor) to run.</p>
 </li>
@@ -1802,7 +1802,7 @@ Otherwise, they will be in another AWS account.</p>
 <p>The log processor reads and processes the log records and ingests the logs into the OpenSearch domain.</p>
 </li>
 <li>
-<p>Logs that fail to be processed are exported to an Amazon S3 bucket (Backup Bucket).</p>
+<p>Logs that fail to be processed are exported to an Amazon S3 bucket (Backup Bucket)</p>
 </li>
 </ol>
 <p><br/></p>
@@ -1813,9 +1813,27 @@ Otherwise, they will be in another AWS account.</p>
 <strong><em>Application log pipeline architecture for EC2/EKS</em></strong></p>
 <p>The log pipeline runs the following workflow:</p>
 <ol>
-<li>Fluent Bit works as the underlying log agent to collect logs from application servers and send them to an optional Log Buffer.</li>
-<li>The Log Buffer triggers the Lambda to copy objects from log bucket to staging bucket.</li>
-<li>Log Processor, AWS Step Functions, processes raw log files stored in the staging bucket in batches, converts them to Apache Parquet, and automatically partitions all incoming data by criteria including time and region.</li>
+<li>
+<p><a href="https://fluentbit.io/">Fluent Bit</a> works as the underlying log agent to collect logs from application servers and send them to an optional <a href="../applications/#log-buffer">Log Buffer</a>, or ingest into OpenSearch domain directly.</p>
+</li>
+<li>
+<p>An event notification is sent to Amazon SQS using S3 Event Notifications when a new log file is created.</p>
+</li>
+<li>
+<p>Amazon SQS initiates AWS Lambda.</p>
+</li>
+<li>
+<p>AWS Lambda gets objects from the Amazon S3 log bucket.</p>
+</li>
+<li>
+<p>AWS Lambda puts objects to the staging bucket.</p>
+</li>
+<li>
+<p>The Log Processor, AWS Step Functions, processes raw log files stored in the staging bucket in batches.</p>
+</li>
+<li>
+<p>The Log Processor, AWS Step Functions, converts log data into Apache Parquet format and automatically partitions all incoming data based on criteria including time and region .</p>
+</li>
 </ol>
 <h3 id="logs-from-syslog-client">Logs from Syslog Client</h3>
 <div class="admonition important">
