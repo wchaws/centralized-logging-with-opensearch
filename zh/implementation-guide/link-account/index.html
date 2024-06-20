@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://aws-solutions.github.io/centralized-logging-with-opensearch/implementation-guide/link-account/">
       
       <link rel="icon" href="../../images/aws-solutions.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.5.3">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.5.2">
     
     
       
@@ -19,7 +19,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.7a952b86.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.9f9400aa.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
@@ -387,6 +387,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solution-overview/concepts/" class="md-nav__link">
+        概念
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -426,7 +440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../architecture-overview/architecture/" class="md-nav__link">
         架构图
       </a>
     </li>
@@ -487,8 +501,36 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture-details/solution-components/" class="md-nav__link">
-        解决方案组件
+      <a href="../architecture-details/service-log-analytics-pipeline/" class="md-nav__link">
+        AWS 服务日志分析管道
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-details/application-log-analytics-pipeline/" class="md-nav__link">
+        应用程序日志分析管道
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture-details/light-engine/" class="md-nav__link">
+        Light Engine
       </a>
     </li>
   
@@ -502,7 +544,7 @@
   
     <li class="md-nav__item">
       <a href="../architecture-details/services-in-this-solution/" class="md-nav__link">
-        AWS 服务
+        此解决方案中的 AWS 服务
       </a>
     </li>
   
@@ -905,7 +947,7 @@
   
     <li class="md-nav__item">
       <a href="../aws-services/cloudtrail/" class="md-nav__link">
-        Amazon CloudTrail
+        AWS CloudTrail
       </a>
     </li>
   
@@ -1372,6 +1414,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../update/" class="md-nav__link">
+        升级解决方案
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../uninstall/" class="md-nav__link">
         卸载解决方案
       </a>
@@ -1389,18 +1445,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_15" type="checkbox" id="__nav_1_15" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_16" type="checkbox" id="__nav_1_16" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_1_15">
+        <label class="md-nav__link" for="__nav_1_16">
           额外资源
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="额外资源" data-md-level="2">
-        <label class="md-nav__title" for="__nav_1_15">
+        <label class="md-nav__title" for="__nav_1_16">
           <span class="md-nav__icon md-icon"></span>
           额外资源
         </label>
@@ -1608,7 +1664,7 @@
 <li><strong>成员账户</strong>: 您拥有 AWS 服务或应用程序并希望从中提取日志的账户。</li>
 </ul>
 <p>成员账户中的 CloudFormation 堆栈具有最少的权限。日志通需要在成员账户中预置一些 AWS 资源来收集日志，并将采用 IAM 在成员账户中配置的角色以列出或创建资源。
-请参考 <a href="../architecture/">架构</a>部分了解更多详情。</p>
+请参考 <a href="../architecture-overview/architecture/">架构</a>部分了解更多详情。</p>
 <h2 id="_3">关联一个成员账户</h2>
 <h3 id="1-cloudformation">步骤 1. 在成员账户中部署 CloudFormation 堆栈</h3>
 <ol>
@@ -1660,14 +1716,29 @@
 <td>日志通 将通过消费这个角色来操作关联账号中的资源。</td>
 </tr>
 <tr>
-<td>FluentBit Agent Installation Document</td>
+<td>Fluent Bit Agent Installation Document</td>
 <td>AgentInstallDocument</td>
 <td>日志通 将使用此 SSM 文档在成员账户中的 EC2 实例上安装 Fluent Bit 代理。</td>
 </tr>
 <tr>
-<td>FluentBit Agent Configuration Document</td>
+<td>Fluent Bit Agent Configuration Document</td>
 <td>AgentConfigDocument</td>
 <td>日志通 将使用此 SSM 文档将 Fluent Bit 配置下发给 EC2 实例。</td>
+</tr>
+<tr>
+<td>Fluent Bit for Windows 代理安装文档</td>
+<td>AgentInstallDocumentForWindows</td>
+<td>Fluent Bit for Windows 代理安装配置。</td>
+</tr>
+<tr>
+<td>Fluent Bit for Windows 代理配置文档</td>
+<td>AnentConfigDocumentForWindows</td>
+<td>Fluent Bit 代理配置文档.</td>
+</tr>
+<tr>
+<td>Fluent Bit 状态检查文档</td>
+<td>AgentStatusCheckDocument</td>
+<td>Fluent Bit状态检查。</td>
 </tr>
 <tr>
 <td>Cross Account S3 Bucket</td>
@@ -1759,10 +1830,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": "latest"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": "latest"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.37e9125f.min.js"></script>
+      <script src="../../assets/javascripts/bundle.39f04ddb.min.js"></script>
       
     
   </body>
